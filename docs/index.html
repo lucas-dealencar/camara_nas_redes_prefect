@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07333a">
+  <meta name="description" content="Relatório semanal Câmara nas Redes: repercussão das propostas legislativas nas redes sociais abertas.">
+  <title>Câmara nas Redes — Relatório semanal</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+<body class="page-cover">
+  <header class="cover" id="inicio" aria-label="Câmara nas Redes, destaques da semana">
+    <img class="cover-art" src="assets/img/capa.svg" alt="" aria-hidden="true">
+    <div class="cover-content">
+      <h1>Destaques da Semana:<br>5 Propostas com maior engajamento.</h1>
+      <div class="cover-divider"></div>
+      <p class="cover-summary" id="cover-summary">Carregando síntese da semana...</p>
+    </div>
+    <div class="cover-meta"><span id="edition-label">—</span><span id="period-label">—</span></div>
+  </header>
+
+  <nav class="main-nav" aria-label="Navegação do relatório">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <a class="nav-link active" href="#destaques" data-section="destaques">
+          <svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="2" width="16" height="16" rx="3"/><path d="M6 7h8M6 10h8M6 13h5"/></svg>Destaques
+        </a>
+        <a class="nav-link" href="#analitico" data-section="analitico">
+          <svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="2" width="16" height="16" rx="3"/><path d="M6 14V9M10 14V6M14 14v-4"/></svg>Analítico
+        </a>
+        <a class="nav-link" href="#propostas" data-section="propostas">
+          <svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="2" width="16" height="16" rx="3"/><path d="M6 14V9M10 14V6M14 14v-4"/></svg>Propostas
+        </a>
+        <a class="nav-link" href="#metodologia" data-section="metodologia">
+          <svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="2" width="16" height="16" rx="3"/><path d="M6 14V9M10 14V6M14 14v-4"/></svg>Metodologia
+        </a>
+      </div>
+
+      <div class="proposta-busca-wrapper" id="proposta-busca-wrapper">
+        <label class="proposta-busca-box" for="busca-proposta-global">
+          <svg class="proposta-busca-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.5"/>
+            <path d="m10.5 10.5 3.5 3.5"/>
+          </svg>
+          <input id="busca-proposta-global" type="search" placeholder="Pesquisar em toda a base" autocomplete="off" aria-label="Pesquise uma proposta ou semana">
+          <button type="button" class="proposta-busca-clear" id="limpar-busca-proposta" aria-label="Limpar pesquisa">&times;</button>
+        </label>
+        <ul class="proposta-sugestoes" id="lista-sugestoes-proposta" role="listbox" aria-label="Sugestões de propostas"></ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="top-filter-bar">
+      <div class="periodo-filtro" id="filtro-semana">
+        <button type="button" class="periodo-btn" id="btn-semana-atual" aria-haspopup="listbox" aria-expanded="false" aria-controls="lista-semanas">
+          <svg class="periodo-seta" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8.5 10 4.5"/></svg>
+          <span class="periodo-btn-texto">
+            <span id="texto-semana-ativa">Selecione a Semana</span>
+          </span>
+        </button>
+        <div class="periodo-painel" id="painel-semana">
+          <label class="periodo-busca">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+            <input id="busca-semana" type="search" placeholder="Pesquisar semana ou mês" autocomplete="off" aria-label="Pesquisar semana ou mês" aria-controls="lista-semanas">
+          </label>
+          <ul class="periodo-lista" id="lista-semanas" role="listbox" aria-label="Semanas monitoradas"></ul>
+          <div class="periodo-rodape">
+            <span id="contagem-semanas"></span>
+            <button type="button" id="limpar-semana">Ir para a mais recente</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section overview active" id="destaques">
+      
+      <!-- 1. Cartões de KPI no topo -->
+      <div class="kpi-grid" id="kpi-grid"></div>
+
+      <!-- 2. Gráfico de Evolução (Colunas) no meio -->
+      <article class="panel trend-panel">
+        <div class="panel-heading">
+          <h2 class="panel-title-sm">EVOLUÇÃO NAS ÚLTIMAS 4 SEMANAS</h2>
+          <span class="panel-note">Últimas 4 semanas</span>
+        </div>
+        
+        <div class="trend-detail" id="trend-detail" aria-live="polite"></div>
+
+        <div id="trend-chart" class="chart chart-trend" aria-label="Gráfico de evolução semanal"></div>
+        
+        <div class="trend-controls">
+          <span class="trend-hint">Passe pelas colunas ou selecione uma semana para ver o detalhamento acima</span>
+          <button class="median-toggle" id="median-toggle" type="button" aria-pressed="true">
+            <span class="legend-line"></span>Mediana anual <span class="median-toggle-state">Visível</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 3. Propostas em destaque no final -->
+      <div class="section-heading-lined">
+        <h2>PROPOSTAS EM DESTAQUE</h2>
+      </div>
+      <div id="highlight-cards" class="proposal-list"></div>
+      
+    </section>
+
+    <section class="section analytics" id="analitico">
+      <div class="section-heading"><div><p class="eyebrow">LEITURA DOS DADOS</p><h2>Analítico</h2></div><p class="section-subtitle">Resultados da participação na semana</p></div>
+      <div class="kpi-grid kpi-grid-compact" id="analytic-kpis"></div>
+      <div class="analytics-grid">
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">DISTRIBUIÇÃO</p><h3>Engajamento por canal</h3></div></div><div id="channel-chart" class="chart chart-bars"></div></article>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">CONCENTRAÇÃO</p><h3>Participação das propostas</h3></div><span class="panel-note">Top 5 propostas</span></div><div id="share-chart" class="chart chart-share"></div></article>
+      </div>
+      <article class="panel topics-panel"><div class="panel-heading"><div><p class="eyebrow">ASSUNTOS EM PAUTA</p><h3>Temas com maior engajamento</h3></div><span class="panel-note">Pontos de engajamento</span></div><div id="topic-chart" class="chart chart-bars topic-bars"></div></article>
+    </section>
+
+    <section class="section proposals-section" id="propostas">
+      <div class="section-heading"><div><p class="eyebrow">DETALHAMENTO</p><h2>Propostas em destaque</h2></div><p class="section-subtitle" id="proposals-subtitle">Selecione uma proposta para ver os detalhes</p></div>
+      <nav class="proposal-subnav" aria-label="Submenu de propostas"><div class="proposal-subnav-heading"><span class="eyebrow">PROPOSTAS DA SEMANA</span><span class="panel-note" id="proposals-range-note">01 — 05</span></div><div id="proposal-tabs" class="proposal-tabs" role="tablist" aria-label="Selecionar uma proposta"></div></nav>
+      <div id="proposal-detail" class="proposal-detail"></div>
+    </section>
+
+    <section class="section methodology" id="metodologia">
+      <div class="section-heading"><div><p class="eyebrow">COMO LER OS RESULTADOS</p><h2>Metodologia</h2></div><p class="section-subtitle">Critérios, indicadores e limites do monitoramento</p></div>
+      <div class="method-tabs" role="tablist" aria-label="Seções da metodologia">
+        <button class="method-tab active" data-method="gerais">Informações gerais</button><button class="method-tab" data-method="calculos">Cálculos e definições</button><button class="method-tab" data-method="analise">Análise qualitativa</button>
+      </div>
+      <div id="method-content" class="method-content"></div>
+      <aside class="method-caveat"><span class="caveat-icon">i</span><p>Os resultados refletem publicações abertas captadas pela plataforma no período. Eles indicam tendências desse universo monitorado e não representam estatisticamente a opinião da sociedade brasileira.</p></aside>
+    </section>
+  </main>
+  
+  <footer class="site-footer" aria-label="Coordenação de Relacionamento, Inteligência e Participação; Diretoria Executiva de Comunicação e Mídias Digitais; 200 anos da Câmara dos Deputados">
+    <img class="footer-art" src="assets/img/rodape-camara.png" alt="Coordenação de Relacionamento, Inteligência e Participação · Diretoria Executiva de Comunicação e Mídias Digitais · 200 anos da Câmara dos Deputados">
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>

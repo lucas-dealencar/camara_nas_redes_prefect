@@ -1,0 +1,14 @@
+# Credenciais: nunca versionar
+src/credentials.json
+*.json.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Temporário da escrita atômica (o dados_dashboard.json É versionado: é o que o Pages publica)
+docs/dados/*.tmp
+
+.prefect/
