@@ -608,7 +608,13 @@
   margin: 0 auto;
 }
 
-.trend-point { outline: none !important; }
+.trend-point { 
+  outline: none !important; 
+  cursor: pointer;
+}
+.trend-point rect { 
+  cursor: pointer; 
+}
 .trend-point:focus { outline: none !important; }
 .trend-point:focus-visible { outline: none !important; }
 
