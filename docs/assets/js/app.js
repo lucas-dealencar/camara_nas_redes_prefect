@@ -389,7 +389,7 @@ function renderTrend() {
     
     parts += `<g class="trend-point ${selected?'selected':''}" data-index="${i}" role="button" tabindex="0" aria-pressed="${selected}" aria-label="Semana ${d.week}, ${esc(d.display||formatNumber(d.value,true))} pontos">
       <rect class="point-guide" x="${x(i) - colStep/2}" y="${top}" width="${colStep}" height="${H-bottom-top}"/>
-      <rect class="${barClass}" x="${xx}" y="${yy}" width="${barW}" height="${Math.max(0, bh)}" rx="4"/>
+      <rect class="${barClass}" style="fill: var(--ink) !important;" x="${xx}" y="${yy}" width="${barW}" height="${Math.max(0, bh)}" rx="4"/>
       <title>Semana ${d.week}: ${esc(d.display||formatNumber(d.value))}</title>
     </g>
     <text class="value-label" x="${x(i)}" y="${yy-8}" text-anchor="middle" fill="#000">${esc(d.display||formatNumber(d.value,true))}</text>
@@ -577,7 +577,9 @@ function renderBarChart(target, data, {max=null, labels=true, compact=true, colo
 }
 
 function renderChannelChart(){
-  renderBarChart('channel-chart', report.channels||[], {
+  const sortedChannels = [...(report.channels || [])].sort((a, b) => b.value - a.value);
+  
+  renderBarChart('channel-chart', sortedChannels, {
     labels: true, 
     compact: true,
     colorMap: {
