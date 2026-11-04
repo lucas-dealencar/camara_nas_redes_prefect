@@ -346,7 +346,7 @@ function renderKpis(items,target) {
 
 function svgWrap(viewBox,content,label) { return `<svg viewBox="0 0 ${viewBox}" role="img" aria-label="${esc(label)}" xmlns="http://www.w3.org/2000/svg">${content}</svg>`; }
 
-/* ===== Novo Gráfico de Evolução (Colunas) + Inversão de Cor ===== */
+/* ===== Gráfico de Evolução (Colunas) ===== */
 function renderTrend() {
   const chartNode=document.getElementById('trend-chart');
   if(!chartNode) return;
@@ -380,16 +380,13 @@ function renderTrend() {
   });
   
   values.forEach((d,i) => {
-    const isAbove = d.value >= (report.median || 0);
-    const barClass = isAbove ? 'bar-trend-high' : 'bar-trend-low';
     const selected = i === selectedWeek;
     const yy = y(d.value);
     const bh = (H - bottom) - yy;
     const xx = x(i) - barW/2;
     
     parts += `<g class="trend-point ${selected?'selected':''}" data-index="${i}" role="button" tabindex="0" aria-pressed="${selected}" aria-label="Semana ${d.week}, ${esc(d.display||formatNumber(d.value,true))} pontos">
-      <rect class="point-guide" x="${x(i) - colStep/2}" y="${top}" width="${colStep}" height="${H-bottom-top}"/>
-      <rect class="${barClass}" style="fill: var(--ink) !important;" x="${xx}" y="${yy}" width="${barW}" height="${Math.max(0, bh)}" rx="4"/>
+      <rect class="bar-trend" style="fill: #134e5e !important; cursor: pointer;" x="${xx}" y="${yy}" width="${barW}" height="${Math.max(0, bh)}" rx="4"/>
       <title>Semana ${d.week}: ${esc(d.display||formatNumber(d.value))}</title>
     </g>
     <text class="value-label" x="${x(i)}" y="${yy-8}" text-anchor="middle" fill="#000">${esc(d.display||formatNumber(d.value,true))}</text>
