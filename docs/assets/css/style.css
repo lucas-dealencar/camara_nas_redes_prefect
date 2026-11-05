@@ -886,9 +886,9 @@ main{width:min(100%,1000px);max-width:1000px;margin:0 auto;padding:28px 30px 64p
 .trend-steps button:hover:not(:disabled){background:var(--ink);color:#fff; border-color:var(--ink)}
 .trend-steps button:disabled{opacity:.35;cursor:default}
 /* ==========================================================================
-   Ajustes mobile  (DEVE FICAR NO FINAL do arquivo, para vencer as regras base)
+   Ajustes mobile  
    ========================================================================== */
-.proposal-card .proposal-status { margin: 8px 0 0; }
+.proposal-card .proposal-status { margin: 18px 0 0; }
 .proposal-card .proposal-status strong { font-weight: 800; color: var(--ink); }
 
 @media (max-width: 850px) {
