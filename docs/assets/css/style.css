@@ -1,3 +1,12 @@
+/* Esconde o 'x' nativo do input type="search" no Chrome/Safari */
+.proposta-busca-box input::-webkit-search-cancel-button,
+.proposta-busca-box input::-webkit-search-decoration,
+.proposta-busca-box input::-webkit-search-clear-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
 /* ==========================================================================
    Barra de navegação + Filtro de Proposta + Filtro global de Semana (Power BI)
    ========================================================================== */
@@ -460,7 +469,7 @@
 }
 
 /* ==========================================================================
-   Cartões de "Propostas em Destaque" (Empilhados 1 abaixo do outro)
+   Cartões de "Propostas em Destaque"
    ========================================================================== */
 .section-heading-lined {
   margin: 0 0 20px;
@@ -696,6 +705,59 @@
   .proposal-card-right {
     padding-left: 0;
   }
+  
+  /* Ajuste da Capa (Header) para Mobile / Evitar sobreposição */
+  .cover {
+    aspect-ratio: auto !important;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cover-content {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 30px;
+    gap: 16px;
+    height: 100%;
+  }
+  .cover-content h1, 
+  .cover-divider, 
+  .cover-summary, 
+  .cover-meta {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    max-width: 100%;
+    transform: none;
+    margin: 0;
+  }
+  .cover-meta {
+    align-self: flex-start;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 570px) {
+  /* Correção Header para celular pequeno */
+  .cover {
+    min-height: 380px;
+  }
+  .cover-content {
+    padding: 30px 20px;
+  }
+  .cover-content h1 {
+    font-size: 26px !important;
+  }
+  .cover-summary {
+    font-size: 14px !important;
+  }
+  .cover-meta {
+    margin-top: 20px;
+  }
 }
 
 /* ===== Layout/componentes base ===== */
@@ -707,7 +769,7 @@
 .cover-content{position:absolute;inset:0;color:#fff}
 .cover-content h1{position:absolute;left:10%;top:36%;width:80%;margin:0;color:#fff;font-family:Manrope,"DM Sans",sans-serif;font-size:clamp(30px,3.8vw,64px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
 .cover-divider{position:absolute;left:10%;top:57%;width:75%;max-width:860px;height:1px;background:rgba(255,255,255,.3)}
-.cover-summary{position:absolute;left:10%;top:62%;width:70%;max-width:800px;margin:0;color:rgba(235,248,249,.85);font-size:clamp(13px,1.15vw,16px);line-height:1.5}
+.cover-summary{position:absolute;left:10%;top:62%;width:70%;max-width:800px;margin:0;color:#ffffff;font-size:clamp(15px,1.35vw,18px);font-weight:700;line-height:1.5}
 .cover-meta{position:absolute;right:clamp(22px,8vw,120px);bottom:30px;display:flex;gap:8px;align-items:center;line-height:1;font-size:12px;color:#fff;background:rgba(7,51,58,.75);padding:10px 13px;border:1px solid rgba(255,255,255,.15);border-radius:8px;backdrop-filter:blur(10px)}.cover-meta span+span:before{content:"·";margin-right:8px;color:var(--mint)}
 
 .main-nav{position:sticky;top:0;z-index:10;background:rgba(215,230,232,.96);border-top:3px solid var(--mint);box-shadow:0 5px 18px rgba(7,51,58,.06);backdrop-filter:blur(14px)}.nav-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:7px 12px;color:var(--ink-2);border:1px solid #4a6c71;border-radius:5px;text-decoration:none;font-size:13.5px;font-weight:600;white-space:nowrap;background:transparent;transition:background .18s,color .18s,border .18s,transform .18s;cursor:pointer}.nav-link:hover{transform:translateY(-1px);border-color:var(--ink)}.nav-link.active{background:var(--ink);border-color:var(--ink);color:#fff}.nav-icon{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -823,6 +885,3 @@ main{width:min(100%,1000px);max-width:1000px;margin:0 auto;padding:28px 30px 64p
 .trend-steps button{width:28px;height:28px;border:1px solid #a9bfc2;border-radius:6px;background:transparent;color:var(--ink);font-size:15px;line-height:1;cursor:pointer; display:flex; align-items:center; justify-content:center;}
 .trend-steps button:hover:not(:disabled){background:var(--ink);color:#fff; border-color:var(--ink)}
 .trend-steps button:disabled{opacity:.35;cursor:default}
-
-@media(max-width:850px){.kpi-grid,.kpi-grid-compact{grid-template-columns:repeat(2,minmax(0,1fr))}.analytics-grid,.detail-grid,.detail-story,.method-content{grid-template-columns:1fr}.trend-detail{flex-direction:column; align-items:flex-start} main{padding-left:16px;padding-right:16px}}
-@media(max-width:570px){.detail-kpis,.kpi-grid,.kpi-grid-compact{grid-template-columns:1fr}.detail-heading{flex-direction:column}.periodo-filtro{max-width:100%} .trend-detail-left {flex-direction:column; align-items:flex-start; gap: 12px;} .trend-detail-period{border-right: none; padding-right: 0; border-bottom: 1px solid #e0e8e9; padding-bottom: 12px; width: 100%;}}

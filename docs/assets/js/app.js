@@ -301,7 +301,33 @@ function renderCurrentWeek() {
 
   document.getElementById('edition-label').textContent = report.edition || 'Relatório semanal';
   document.getElementById('period-label').textContent = report.period || '';
-  document.getElementById('cover-summary').textContent = report.summary || '';
+  
+  // --- SUBTÍTULO DINÂMICO ---
+  let dynSummary = report.summary || '';
+  if (report.history && report.history.length > 0 && report.proposals && report.proposals.length > 0) {
+    const vals = report.history;
+    const curr = vals[vals.length - 1];
+    const prev = vals.length > 1 ? vals[vals.length - 2] : null;
+    
+    // Variação em relação à semana anterior
+    const repChange = report.kpis?.[0]?.change;
+    let changeVal = repChange != null ? repChange : (prev && prev.value ? ((curr.value - prev.value) / prev.value) * 100 : null);
+    let changeText = changeVal != null ? `${changeVal >= 0 ? 'aumentou' : 'caiu'} ${percentage(Math.abs(changeVal))}` : 'teve variação desconhecida';
+    
+    // Variação em relação à mediana
+    let medianDelta = report.median ? ((curr.value - report.median) / report.median) * 100 : null;
+    let medianText = medianDelta != null ? `ficou ${percentage(Math.abs(medianDelta))} ${medianDelta >= 0 ? 'acima' : 'abaixo'} da mediana do ano` : 'sem dados de mediana do ano';
+    
+    // Proposta destaque
+    const topP = report.proposals[0];
+    const topPName = topP.id;
+    const topPShare = percentage(topP.share || 0);
+    
+    dynSummary = `O engajamento ${changeText} em relação à semana anterior e ${medianText}. O destaque fica para ${topPName}, que concentrou ${topPShare} dos pontos de engajamento da semana.`;
+  }
+  document.getElementById('cover-summary').textContent = dynSummary;
+  // -------------------------
+
   document.title = `Câmara nas Redes — ${String(report.edition || 'Relatório semanal').split(' · ')[0]}`;
 
   const headlineKpis = ['ENGAJAMENTO GERAL', 'POSTAGENS', 'POSTAGEM', 'ALCANCE ESTIMADO'];
