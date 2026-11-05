@@ -549,8 +549,8 @@ function renderCards() {
       </div>
       <div class="proposal-card-right">
         <div class="proposal-summary">${esc(p.description)}</div>
-        ${p.status ? `<div class="proposal-summary proposal-status">Situação atual: ${esc(p.status)}</div>` : ''}
         <p class="card-copy">${esc(buildFallbackSummary(p, false))}</p>
+        ${p.status ? `<p class="card-copy proposal-status"><strong>Situação atual:</strong> ${esc(p.status)}</p>` : ''}
       </div>
     </article>
   `).join('');
@@ -691,4 +691,4 @@ setNavH();
 if(window.ResizeObserver)new ResizeObserver(setNavH).observe(navEl);else window.addEventListener('resize',setNavH);
 
 loadReport();
-navigateToPage(location.hash.slice(1)||'destaques',false);s
+navigateToPage(location.hash.slice(1)||'destaques',false);

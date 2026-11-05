@@ -888,7 +888,8 @@ main{width:min(100%,1000px);max-width:1000px;margin:0 auto;padding:28px 30px 64p
 /* ==========================================================================
    Ajustes mobile  (DEVE FICAR NO FINAL do arquivo, para vencer as regras base)
    ========================================================================== */
-.proposal-card .proposal-status { margin: 0 0 8px; }
+.proposal-card .proposal-status { margin: 8px 0 0; }
+.proposal-card .proposal-status strong { font-weight: 800; color: var(--ink); }
 
 @media (max-width: 850px) {
   html, body { overflow-x: hidden; }
