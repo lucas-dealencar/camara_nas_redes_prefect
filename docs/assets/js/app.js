@@ -416,7 +416,7 @@ function renderTrend() {
       <title>Semana ${d.week}: ${esc(d.display||formatNumber(d.value))}</title>
     </g>
     <text class="value-label" x="${x(i)}" y="${yy-8}" text-anchor="middle" fill="#000">${esc(d.display||formatNumber(d.value,true))}</text>
-    <text class="axis-label" x="${x(i)}" y="${H-24}" text-anchor="middle" font-weight="700" fill="#000">${esc(d.label)}</text>
+    ${W<480?'':`<text class="axis-label" x="${x(i)}" y="${H-24}" text-anchor="middle" font-weight="700" fill="#000">${esc(d.label)}</text>`}
     <text class="axis-label" x="${x(i)}" y="${H-10}" text-anchor="middle" fill="#000">Semana ${d.week}</text>`;
   });
 
@@ -495,7 +495,7 @@ function wireTrendInteractions(values,geometry){
   });
 }
 
-function buildFallbackSummary(p) {
+function buildFallbackSummary(p, withStatus = true) {
   if (p.summary) return p.summary;
   const parts = [];
   if (p.posts != null && p.authors != null) {
@@ -507,7 +507,7 @@ function buildFallbackSummary(p) {
     parts.push(`com alcance estimado de ${formatNumber(p.reach, true)}`);
   }
   const sentence1 = parts.length ? parts.join(', ') + '.' : '';
-  const sentence2 = p.status ? `Situação atual: ${p.status}.` : '';
+  const sentence2 = (withStatus && p.status) ? `Situação atual: ${p.status}.` : '';
   return [sentence1, sentence2].filter(Boolean).join(' ') || 'Consulte os dados disponíveis para esta proposta no detalhamento.';
 }
 
@@ -549,7 +549,8 @@ function renderCards() {
       </div>
       <div class="proposal-card-right">
         <div class="proposal-summary">${esc(p.description)}</div>
-        <p class="card-copy">${esc(buildFallbackSummary(p))}</p>
+        ${p.status ? `<div class="proposal-summary proposal-status">Situação atual: ${esc(p.status)}</div>` : ''}
+        <p class="card-copy">${esc(buildFallbackSummary(p, false))}</p>
       </div>
     </article>
   `).join('');
@@ -690,4 +691,4 @@ setNavH();
 if(window.ResizeObserver)new ResizeObserver(setNavH).observe(navEl);else window.addEventListener('resize',setNavH);
 
 loadReport();
-navigateToPage(location.hash.slice(1)||'destaques',false);
+navigateToPage(location.hash.slice(1)||'destaques',false);s

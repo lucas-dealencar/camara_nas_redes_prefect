@@ -885,3 +885,51 @@ main{width:min(100%,1000px);max-width:1000px;margin:0 auto;padding:28px 30px 64p
 .trend-steps button{width:28px;height:28px;border:1px solid #a9bfc2;border-radius:6px;background:transparent;color:var(--ink);font-size:15px;line-height:1;cursor:pointer; display:flex; align-items:center; justify-content:center;}
 .trend-steps button:hover:not(:disabled){background:var(--ink);color:#fff; border-color:var(--ink)}
 .trend-steps button:disabled{opacity:.35;cursor:default}
+/* ==========================================================================
+   Ajustes mobile  (DEVE FICAR NO FINAL do arquivo, para vencer as regras base)
+   ========================================================================== */
+.proposal-card .proposal-status { margin: 0 0 8px; }
+
+@media (max-width: 850px) {
+  html, body { overflow-x: hidden; }
+  main { padding: 20px 16px 48px; }
+
+  /* Capa: texto e selo da edição em fluxo normal (sem sobreposição) */
+  .cover { display: flex; flex-direction: column; aspect-ratio: auto !important; min-height: 0; line-height: normal; }
+  .cover > img.cover-art { object-position: left center; }
+  .cover-content { position: relative; inset: auto; display: flex; flex-direction: column; gap: 14px; padding: 118px 20px 12px; }
+  .cover-content h1,
+  .cover-divider,
+  .cover-summary { position: static; left: auto; top: auto; width: 100%; max-width: 100%; margin: 0; }
+  .cover-content h1 { font-size: clamp(26px, 7.5vw, 34px); }
+  .cover-summary { font-size: 14.5px; line-height: 1.5; }
+  .cover-meta { position: relative; right: auto; bottom: auto; align-self: flex-start; flex-wrap: wrap; margin: 4px 20px 24px; max-width: calc(100% - 40px); }
+
+  /* Grades: uma coluna / duas colunas, nada estoura a tela */
+  .kpi-grid { grid-template-columns: 1fr; gap: 14px; }
+  .kpi-card { min-height: 0; padding: 18px 20px 16px; }
+  .kpi-grid-compact { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .kpi-grid-compact .kpi-card { min-height: 0; padding: 14px 14px 12px; }
+  .kpi-grid-compact .kpi-value { font-size: 24px; }
+  .analytics-grid,
+  .method-content,
+  .detail-grid,
+  .detail-story { grid-template-columns: 1fr; }
+  .analytics-grid .panel { min-height: 0; }
+  .detail-kpis { grid-template-columns: 1fr 1fr; }
+  .detail-heading { flex-direction: column; gap: 10px; }
+  .section-heading { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .panel { padding: 18px 16px 20px; }
+  .proposal-detail { padding: 18px 14px; }
+
+  /* Gráfico de evolução + detalhe da semana */
+  .trend-panel { margin-bottom: 40px; }
+  .panel-heading { flex-wrap: wrap; gap: 8px; }
+  .trend-detail { flex-direction: column; align-items: flex-start; padding: 16px; }
+  .trend-detail-left { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .trend-detail-period { border-right: 0; padding-right: 0; }
+  .trend-controls { flex-wrap: wrap; }
+
+  /* Menu fixo mais compacto */
+  .proposal-subnav { padding: 10px 12px 0; }
+}
