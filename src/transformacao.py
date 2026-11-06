@@ -13,6 +13,11 @@ OVERRIDES_PARTIDO_UF = {
 # "... - PL/RO"  ou  "... (PTB/AL)"  no fim do texto
 REGEX_PARTIDO_UF = r"[-(]\s*(?P<partido>[^/()\-]+?)\s*/\s*(?P<uf>[A-Z]{2})\s*\)?\s*$"
 
+# Tag artificial: o nome da proposta traz um "00" isolado (PEC00/2026, PL 00/2026).
+# Lookarounds: "00" não precedido nem seguido de dígito -> não pega PL 1009/2022,
+# PL 100/2022 nem PL 1/2000, onde o "00" faz parte de um número maior.
+REGEX_TAG_ARTIFICIAL = r"(?<!\d)00(?!\d)"
+
 # Texto da aba métricas_da_semana (o molde usa "Contexto teste"; sem fonte real, fica vazio).
 CONTEXTO_PADRAO = None
 
@@ -86,6 +91,11 @@ def _limpar_textos(df: pd.DataFrame) -> pd.DataFrame:
 # --------------------------------------------------------------------------- #
 def _montar_propostas(df: pd.DataFrame) -> pd.DataFrame:
     p = df[df["Categoria"] == "Proposta"].rename(columns=RENOMEAR).rename(columns={"Nome": "proposta"})
+
+    artificiais = p["proposta"].str.contains(REGEX_TAG_ARTIFICIAL, regex=True, na=False)
+    if artificiais.any():
+        print(f"Tags artificiais removidas ({artificiais.sum()}): {sorted(p.loc[artificiais, 'proposta'].unique())}")
+    p = p[~artificiais].copy()
 
     # "PL 1/2026" -> PL;  "EMC 1 PEC 221/2019" -> EMC
     p["tipo_proposicao"] = p["proposta"].str.split().str[0]

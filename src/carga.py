@@ -32,9 +32,9 @@ def _periodo(inicio: pd.Timestamp, fim: pd.Timestamp, curto: bool = False) -> st
 # Montagem do payload
 # --------------------------------------------------------------------------- #
 def _totais_por_semana(tabelas: dict[str, pd.DataFrame]) -> pd.DataFrame:
-    """Soma das redes por semana: engagement, menções (postagens) e alcance."""
+    """Soma das redes por semana: engagement, menções (postagens), autores únicos e alcance."""
     redes = pd.concat([tabelas[aba] for aba in REDES.values()], ignore_index=True)
-    return redes.groupby("semana")[["engagement_score", "mencoes", "alcance"]].sum()
+    return redes.groupby("semana")[["engagement_score", "mencoes", "autores_unicos", "alcance"]].sum()
 
 
 def _canais_por_semana(tabelas: dict[str, pd.DataFrame]) -> dict[int, list[dict]]:
@@ -89,7 +89,7 @@ def _montar_payload(tabelas: dict[str, pd.DataFrame]) -> dict[str, Any]:
     for semana, df_semana in propostas.groupby("semana"):
         semana = int(semana)
         t = totais.loc[semana] if semana in totais.index else None
-        eng, posts, alcance = (0, 0, 0) if t is None else map(_inteiro, t)
+        eng, posts, autores, alcance = (0, 0, 0, 0) if t is None else map(_inteiro, t)
 
         # gráfico: as últimas N semanas até a semana selecionada (inclusive)
         fim_janela = bisect_right(semanas_totais, semana)
@@ -110,6 +110,7 @@ def _montar_payload(tabelas: dict[str, pd.DataFrame]) -> dict[str, Any]:
             "kpis": [
                 {"label": "ENGAJAMENTO GERAL", "value": eng, "change": None, "foot": "Pontos na semana"},
                 {"label": "POSTAGENS", "value": posts, "change": None, "foot": "Total coletado"},
+                {"label": "AUTORES ÚNICOS", "value": autores, "change": None, "foot": "Perfis distintos"},
                 {"label": "ALCANCE ESTIMADO", "value": alcance, "change": None, "foot": "Pessoas impactadas"},
             ],
             "history": historico,
